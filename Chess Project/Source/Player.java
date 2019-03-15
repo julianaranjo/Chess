@@ -1,4 +1,4 @@
-package Project3;
+package Source;
 
 public enum Player {
 	BLACK, WHITE;

@@ -1,4 +1,4 @@
-package Project3;
+package Source;
 
 import java.awt.Dimension;
 

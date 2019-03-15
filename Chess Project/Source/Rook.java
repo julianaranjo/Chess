@@ -1,4 +1,4 @@
-package Project3;
+package Source;
 
 public class Rook extends ChessPiece {
 
