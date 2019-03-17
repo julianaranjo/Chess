@@ -40,7 +40,7 @@ public class ChessPanel extends JPanel {
 
         JPanel boardpanel = new JPanel();
         JPanel buttonpanel = new JPanel();
-        boardpanel.setLayout(new GridLayout(model.numRows(), model.numColumns(), -6, -6));
+        boardpanel.setLayout(new GridLayout(model.numRows(), model.numColumns(), 1, 1));
 
         for (int r = 0; r < model.numRows(); r++) {
             for (int c = 0; c < model.numColumns(); c++) {
@@ -50,7 +50,7 @@ public class ChessPanel extends JPanel {
                 } else if (model.pieceAt(r, c).player() == Player.WHITE) {
                     placeWhitePieces(r, c);
                 }
-                else
+                else if (model.pieceAt(r,c).player() == Player.BLACK)
                 {
                     placeBlackPieces(r, c);
                 }
@@ -66,7 +66,7 @@ public class ChessPanel extends JPanel {
 
     private void setBackGroundColor(int r, int c) {
         if ((c % 2 == 1 && r % 2 == 0) || (c % 2 == 0 && r % 2 == 1)) {
-            board[r][c].setIcon(bTile);
+            board[r][c].setBackground(Color.LIGHT_GRAY);
         } else if ((c % 2 == 0 && r % 2 == 0) || (c % 2 == 1 && r % 2 == 1)) {
             board[r][c].setBackground(Color.WHITE);
         }
@@ -128,19 +128,19 @@ public class ChessPanel extends JPanel {
 
     private void createIcons() {
         // Sets the Image for white player pieces
-        wRook = new ImageIcon("wRook.png");
-        wBishop = new ImageIcon("wBishop.png");
-        wQueen = new ImageIcon("wQueen.png");
-        wKing = new ImageIcon("wKing.png");
-        wPawn = new ImageIcon("wPawn.png");
-        wKnight = new ImageIcon("wKnight.png");
-        bRook = new ImageIcon("bRook.png");
-        bBishop = new ImageIcon("bBishop.png");
-        bQueen = new ImageIcon("bQueen.png");
-        bKing = new ImageIcon("bKing.png");
-        bPawn = new ImageIcon("bPawn.png");
-        bKnight = new ImageIcon("bKnight.png");
-        bTile = new ImageIcon("bTile.png");
+        wRook = new ImageIcon("./Chess Project/Source/Icons/wRook.png");
+        wBishop = new ImageIcon("./Chess Project/Source/Icons/wBishop.png");
+        wQueen = new ImageIcon("./Chess Project/Source/Icons/wQueen.png");
+        wKing = new ImageIcon("./Chess Project/Source/Icons/wKing.png");
+        wPawn = new ImageIcon("./Chess Project/Source/Icons/wPawn.png");
+        wKnight = new ImageIcon("./Chess Project/Source/Icons/wKnight.png");
+        bRook = new ImageIcon("./Chess Project/Source/Icons/bRook.png");
+        bBishop = new ImageIcon("./Chess Project/Source/Icons/bBishop.png");
+        bQueen = new ImageIcon("./Chess Project/Source/Icons/bQueen.png");
+        bKing = new ImageIcon("./Chess Project/Source/Icons/bKing.png");
+        bPawn = new ImageIcon("./Chess Project/Source/Icons/bPawn.png");
+        bKnight = new ImageIcon("./Chess Project/Source/Icons/bKnight.png");
+//        bTile = new ImageIcon("./Chess Project/Source/Icons/bTile.png");
 
     }
 
