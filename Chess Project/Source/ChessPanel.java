@@ -2,12 +2,16 @@ package Source;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Stack;
 import javax.swing.*;
 
 public class ChessPanel extends JPanel {
 
     private JButton[][] board;
+    private JButton undoButton;
     private ChessModel model;
+
+    private Stack<IChessPiece[][]> boardStack = new Stack<>();
 
     private ImageIcon wRook;
     private ImageIcon wBishop;
@@ -49,9 +53,7 @@ public class ChessPanel extends JPanel {
                     board[r][c].addActionListener(listener);
                 } else if (model.pieceAt(r, c).player() == Player.WHITE) {
                     placeWhitePieces(r, c);
-                }
-                else if (model.pieceAt(r,c).player() == Player.BLACK)
-                {
+                } else if (model.pieceAt(r, c).player() == Player.BLACK) {
                     placeBlackPieces(r, c);
                 }
                 setBackGroundColor(r, c);
@@ -62,6 +64,10 @@ public class ChessPanel extends JPanel {
         boardpanel.setPreferredSize(new Dimension(600, 600));
         add(buttonpanel);
         firstTurnFlag = true;
+
+        undoButton = new JButton("Undo");
+        undoButton.addActionListener(listener);
+        buttonpanel.add(undoButton);
     }
 
     private void setBackGroundColor(int r, int c) {
@@ -169,9 +175,7 @@ public class ChessPanel extends JPanel {
 
                     if (model.pieceAt(r, c).type().equals("King"))
                         board[r][c].setIcon(wKing);
-                }
-                else if (model.pieceAt(r,c).player() == Player.BLACK)
-                {
+                } else if (model.pieceAt(r, c).player() == Player.BLACK) {
                     if (model.pieceAt(r, c).type().equals("Pawn"))
                         board[r][c].setIcon(bPawn);
 
@@ -210,10 +214,20 @@ public class ChessPanel extends JPanel {
                             firstTurnFlag = true;
                             Move m = new Move(fromRow, fromCol, toRow, toCol);
                             if ((model.isValidMove(m)) == true) {
+                                boardStack.push(model.getBoardState());
                                 model.move(m);
                                 displayBoard();
                             }
                         }
+            if (undoButton == event.getSource()) {
+                if (!boardStack.isEmpty()){
+                    model.setBoardState(boardStack.pop());
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "No undos available");
+                }
+                displayBoard();
+            }
         }
     }
 }

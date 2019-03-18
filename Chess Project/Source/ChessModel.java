@@ -105,4 +105,48 @@ public class ChessModel implements IChessModel {
 		 */
 
 		}
+
+	public IChessPiece[][] getBoardState(){
+		IChessPiece[][] boardCopy = new IChessPiece[8][8];
+		for (int r = 0; r < numRows(); r++){
+			for (int c = 0; c < numColumns(); c++){
+				if (pieceAt(r,c) == null){
+					boardCopy[r][c] = null;
+				}
+				else if (pieceAt(r,c).player() == Player.WHITE){
+					if (pieceAt(r,c).type().equals("King"))
+						boardCopy[r][c] = new King(Player.WHITE);
+					else if (pieceAt(r,c).type().equals("Queen"))
+						boardCopy[r][c] = new Queen(Player.WHITE);
+					else if (pieceAt(r,c).type().equals("Bishop"))
+						boardCopy[r][c] = new Bishop(Player.WHITE);
+					else if (pieceAt(r,c).type().equals("Rook"))
+						boardCopy[r][c] = new Rook(Player.WHITE);
+					else if (pieceAt(r,c).type().equals("Knight"))
+						boardCopy[r][c] = new Knight(Player.WHITE);
+					else if (pieceAt(r,c).type().equals("Pawn"))
+						boardCopy[r][c] = new Pawn(Player.WHITE);
+				}
+				else if (pieceAt(r,c).player() == Player.BLACK){
+					if (pieceAt(r,c).type().equals("King"))
+						boardCopy[r][c] = new King(Player.BLACK);
+					else if (pieceAt(r,c).type().equals("Queen"))
+						boardCopy[r][c] = new Queen(Player.BLACK);
+					else if (pieceAt(r,c).type().equals("Bishop"))
+						boardCopy[r][c] = new Bishop(Player.BLACK);
+					else if (pieceAt(r,c).type().equals("Rook"))
+						boardCopy[r][c] = new Rook(Player.BLACK);
+					else if (pieceAt(r,c).type().equals("Knight"))
+						boardCopy[r][c] = new Knight(Player.BLACK);
+					else if (pieceAt(r,c).type().equals("Pawn"))
+						boardCopy[r][c] = new Pawn(Player.BLACK);
+				}
+			}
+		}
+		return boardCopy;
+	}
+
+	public void setBoardState(IChessPiece[][] newBoard){
+		board = newBoard;
+	}
 }
