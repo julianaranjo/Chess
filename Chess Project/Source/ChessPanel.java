@@ -11,20 +11,10 @@ public class ChessPanel extends JPanel {
     private JButton undoButton;
     private ChessModel model;
 
-    private Stack<IChessPiece[][]> boardStack = new Stack<>();
+    private Stack<ChessPiece[][]> boardStack = new Stack<>();
 
-    private ImageIcon wRook;
-    private ImageIcon wBishop;
-    private ImageIcon wQueen;
-    private ImageIcon wKing;
-    private ImageIcon wPawn;
-    private ImageIcon wKnight;
-    private ImageIcon bRook;
-    private ImageIcon bBishop;
-    private ImageIcon bQueen;
-    private ImageIcon bKing;
-    private ImageIcon bPawn;
-    private ImageIcon bKnight;
+    private ImageIcon wRook, wBishop, wQueen, wKing, wPawn, wKnight;
+    private ImageIcon bRook, bBishop, bQueen, bKing, bPawn, bKnight;
     private ImageIcon bTile;
 
     private boolean firstTurnFlag;
@@ -152,7 +142,6 @@ public class ChessPanel extends JPanel {
 
     // method that updates the board
     private void displayBoard() {
-
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++)
                 if (model.pieceAt(r, c) == null)
@@ -175,6 +164,7 @@ public class ChessPanel extends JPanel {
 
                     if (model.pieceAt(r, c).type().equals("King"))
                         board[r][c].setIcon(wKing);
+
                 } else if (model.pieceAt(r, c).player() == Player.BLACK) {
                     if (model.pieceAt(r, c).type().equals("Pawn"))
                         board[r][c].setIcon(bPawn);
@@ -198,13 +188,50 @@ public class ChessPanel extends JPanel {
         repaint();
     }
 
+    public void promoteUnit(int row, int col) {
+        if (model.pieceAt(row, col).type().equals("Pawn") && (row == 0 || row == 7)) {
+            String[] promotions = {"Queen", "Knight", "Rook", "Bishop"};
+            int output = JOptionPane.showOptionDialog(null, "Please choose your promotion",
+                    "Unit Promotion", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                    promotions, promotions[0]);
+            System.out.println(output);
+            if (output == -1){
+                promoteUnit(row, col);
+            }
+            if (output == 0) {
+                if (model.pieceAt(row, col).player() == Player.WHITE)
+                    model.setPiece(row, col, new Queen(Player.WHITE));
+                else
+                    model.setPiece(row, col, new Queen(Player.BLACK));
+
+            } else if (output == 1) {
+                if (model.pieceAt(row, col).player() == Player.WHITE)
+                    model.setPiece(row, col, new Knight(Player.WHITE));
+                else
+                    model.setPiece(row, col, new Knight(Player.BLACK));
+
+            } else if (output == 2) {
+                if (model.pieceAt(row, col).player() == Player.WHITE)
+                    model.setPiece(row, col, new Rook(Player.WHITE));
+                else
+                    model.setPiece(row, col, new Rook(Player.BLACK));
+
+            } else if (output == 3) {
+                if (model.pieceAt(row, col).player() == Player.WHITE)
+                    model.setPiece(row, col, new Bishop(Player.WHITE));
+                else
+                    model.setPiece(row, col, new Bishop(Player.BLACK));
+            }
+        }
+    }
+
     // inner class that represents action listener for buttons
     private class listener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             for (int r = 0; r < model.numRows(); r++)
                 for (int c = 0; c < model.numColumns(); c++)
                     if (board[r][c] == event.getSource())
-                        if (firstTurnFlag == true) {
+                        if (firstTurnFlag) {
                             fromRow = r;
                             fromCol = c;
                             firstTurnFlag = false;
@@ -213,17 +240,17 @@ public class ChessPanel extends JPanel {
                             toCol = c;
                             firstTurnFlag = true;
                             Move m = new Move(fromRow, fromCol, toRow, toCol);
-                            if ((model.isValidMove(m)) == true) {
+                            if ((model.isValidMove(m))) {
                                 boardStack.push(model.getBoardState());
                                 model.move(m);
+                                promoteUnit(m.toRow, m.toColumn);
                                 displayBoard();
                             }
                         }
             if (undoButton == event.getSource()) {
-                if (!boardStack.isEmpty()){
+                if (!boardStack.isEmpty()) {
                     model.setBoardState(boardStack.pop());
-                }
-                else {
+                } else {
                     JOptionPane.showMessageDialog(null, "No undos available");
                 }
                 displayBoard();
