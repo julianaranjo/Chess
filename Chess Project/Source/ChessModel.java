@@ -76,7 +76,7 @@ public class ChessModel implements IChessModel {
 		{
 			for (int c = 0; c < 8; c++)
 			{
-				if (model.pieceAt(r, c).type().equals("King"))
+				if (pieceAt(r, c).type().equals("King"))
 				{
 					endRow = r;
 					endCol = c;
@@ -89,8 +89,8 @@ public class ChessModel implements IChessModel {
 		{
 			for (int c = 0; c < 8; c++)
 			{
-				Move m = new Move(fromRow, fromCol, endRow, endCol);
-				if ((model.isValidMove(m)))
+				Move m = new Move(r, c, endRow, endCol);
+				if ((isValidMove(m)))
 				{
 					return true;
 				}
