@@ -59,10 +59,45 @@ public class ChessModel implements IChessModel {
         board[move.fromRow][move.fromColumn] = null;
     }
 
-    public boolean inCheck(Player p) {
-        boolean valid = false;
-        return valid;
-    }
+    /******************************************************************
+	 * class with method that implements the action listeners for each
+	 * button
+	 ******************************************************************/
+	public boolean inCheck(Player p)
+	{
+		// initializes boolean to return
+		boolean check = false;
+		// initializes unknown (for now) location of king
+		int endRow = 0;
+		int endCol = 0;
+
+		// for loops to find king
+		for (int r = 0; r < 8; r++)
+		{
+			for (int c = 0; c < 8; c++)
+			{
+				if (model.pieceAt(r, c).type().equals("King"))
+				{
+					endRow = r;
+					endCol = c;
+				}
+			}
+		}
+
+		// for loops to try moves
+		for (int r = 0; r < 8; r++)
+		{
+			for (int c = 0; c < 8; c++)
+			{
+				Move m = new Move(fromRow, fromCol, endRow, endCol);
+				if ((model.isValidMove(m)))
+				{
+					return true;
+				}
+			}
+		}
+		return check;
+	}
 
 
     public Player currentPlayer() {
