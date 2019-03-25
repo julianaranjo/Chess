@@ -3,6 +3,8 @@ package Source;
 public class ChessModel implements IChessModel {
     private ChessPiece[][] board;
     private Player player;
+    private static boolean enPassantW = false;
+    private static boolean enPassantB = false;
 
     // declare other instance variables as needed
 
@@ -33,6 +35,25 @@ public class ChessModel implements IChessModel {
         board[0][7] = new Rook(Player.BLACK);
         for (int i = 0; i < 8; i++) {
             board[1][i] = new Pawn(Player.BLACK);
+        }
+    }
+
+    public static void setEnPassantW(){
+        enPassantW = true;
+    }
+
+    public static void setEnPassantB(){
+        enPassantB = true;
+    }
+
+    public void enPassant(int row, int col){
+        if (enPassantW){
+            board[row + 1][col] = null;
+            enPassantW = false;
+        }
+        else if (enPassantB){
+            board[row - 1][col] = null;
+            enPassantB = false;
         }
     }
 

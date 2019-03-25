@@ -15,7 +15,6 @@ public class ChessPanel extends JPanel {
 
     private ImageIcon wRook, wBishop, wQueen, wKing, wPawn, wKnight;
     private ImageIcon bRook, bBishop, bQueen, bKing, bPawn, bKnight;
-    private ImageIcon bTile;
 
     private boolean firstTurnFlag;
     private int fromRow;
@@ -58,6 +57,7 @@ public class ChessPanel extends JPanel {
         undoButton = new JButton("Undo");
         undoButton.addActionListener(listener);
         buttonpanel.add(undoButton);
+
     }
 
     private void setBackGroundColor(int r, int c) {
@@ -194,7 +194,6 @@ public class ChessPanel extends JPanel {
             int output = JOptionPane.showOptionDialog(null, "Please choose your promotion",
                     "Unit Promotion", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
                     promotions, promotions[0]);
-            System.out.println(output);
             if (output == -1){
                 promoteUnit(row, col);
             }
@@ -243,6 +242,7 @@ public class ChessPanel extends JPanel {
                             if ((model.isValidMove(m))) {
                                 boardStack.push(model.getBoardState());
                                 model.move(m);
+                                model.enPassant(m.toRow, m.toColumn);
                                 promoteUnit(m.toRow, m.toColumn);
                                 displayBoard();
                             }
