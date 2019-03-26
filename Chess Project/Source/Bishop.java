@@ -36,40 +36,48 @@ public class Bishop extends ChessPiece {
      * @param board the game board array
      * @return true or false depending on validity of move
      *****************************************************************/
-    public boolean isValidMove(Move move, IChessPiece[][] board) {
+    public boolean isValidMove(Move move, IChessPiece[][] board)
+	{
+		int ra = move.fromRow, rb = move.toRow;
+		int ca = move.fromColumn, cb = move.toColumn;
 
-        boolean valid = false;
+		// cannot move to the same square
+		if (ra==rb && ca==cb)
+		{
+			return false;
+		}
 
-        if ((move.fromRow == move.toRow) && (move.fromColumn == move.toColumn))
-            return false;
+		// has to move to same row or column
+		if (rb!=ra && cb!=ca)
+		{
+			return false;
+		}
 
-        if (board[move.toRow][move.toColumn] != null)
-            if (board[move.toRow][move.toColumn].player().equals(player()))
-                return false;
+		// target square cannot contain piece of the same color
+		if (board[rb][cb] != null && board[ra][ca].player()==board[rb][cb].player())
+		{
+			return false;
+		}
 
-        if (move.toColumn > board.length || move.toRow > board.length) {
-            valid = false;
-        }
+		// for example if rook is moving up-right, then dr=-1 and dc=1 (there are four possibilies)
+		int dr = 0;
+		if (rb-ra!=0)
+			dr = (rb-ra)/Math.abs(rb-ra);
+		int dc = 0;
+		if (cb-ca!=0)
+			dc = (cb-ca)/Math.abs(cb-ca);
 
-        if (move.toColumn < 0 || move.toRow < 0) {
-            valid = false;
-        }
+		int r = ra+dr;
+		int c = ca+dc;
+		while (r!=rb || c!=cb)
+		{
+			// if a space strictly between the current space and target space is occupied
+			if (board[r][c]!=null)
+				return false;
 
-        if (move.toColumn == move.fromColumn + 0 || move.toRow == move.fromRow + 0) {
-            valid = false;
-        }
-        for (int i = 1; i < board.length; i++) {
-            if (move.toColumn == move.fromColumn + i && move.toRow == move.fromRow + i) {
-                valid = true;
-            } else if (move.toColumn == move.fromColumn - i && move.toRow == move.fromRow + i) {
-                valid = true;
-            } else if (move.toColumn == move.fromColumn - i && move.toRow == move.fromRow - i) {
-                valid = true;
-            } else if (move.toColumn == move.fromColumn + i && move.toRow == move.fromRow - i) {
-                valid = true;
-            }
-        }
-        return valid;
-    }
+			// next space
+			r += dr;
+			c += dc;
+		}
 
 }
