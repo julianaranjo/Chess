@@ -1,6 +1,6 @@
 package Source;
 
-public enum Player {
+public enum  Player {
 	BLACK, WHITE;
 
 	/**

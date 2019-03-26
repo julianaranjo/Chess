@@ -4,8 +4,19 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+/**********************************************************************
+ * GUI Class for the Chess Game
+ *
+ * @author Tyler Dys, Matt Jones, Julia Naranjo
+ * @version 3/25/2019
+ *********************************************************************/
 public class ChessGUI {
 
+    /******************************************************************
+     * Main method for initializing the program's GUI
+     *
+     * @param args optional arguments
+     *****************************************************************/
     public static void main(String[] args) {
         JFrame frame = new JFrame("Chess Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

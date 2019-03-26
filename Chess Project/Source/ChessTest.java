@@ -3,6 +3,12 @@ package Source;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**********************************************************************
+ * JUnit tests for all of the chess classes in the package
+ *
+ * @author Tyler Dys, Matt Jones, Julia Naranjo
+ * @version 3/25/2019
+ *********************************************************************/
 public class ChessTest
 {
     private IChessPiece[][] board = new IChessPiece[8][8];

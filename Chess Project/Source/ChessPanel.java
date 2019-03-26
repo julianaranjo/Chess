@@ -5,26 +5,55 @@ import java.awt.event.*;
 import java.util.Stack;
 import javax.swing.*;
 
+/**********************************************************************
+ * Class for GUI Panel. Handles the games interactivity and creation
+ * of pieces and buttons.
+ *
+ * @author Tyler Dys, Matt Jones, Julia Naranjo
+ * @version 3/25/2019
+ *********************************************************************/
 public class ChessPanel extends JPanel {
 
+    /** An array of JButtons to represent the chessboard */
     private JButton[][] board;
+
+    /** The undo JButton */
     private JButton undoButton;
+
+    /** An instance of the ChessModel class */
     private ChessModel model;
 
+    /** A ChessPiece Stack to store previous turns for undoing */
     private Stack<ChessPiece[][]> boardStack = new Stack<>();
 
+    /** Image Icons for the white pieces */
     private ImageIcon wRook, wBishop, wQueen, wKing, wPawn, wKnight;
+
+    /** Image Icons for the black pieces */
     private ImageIcon bRook, bBishop, bQueen, bKing, bPawn, bKnight;
 
+    /** Boolean for whether or not its the first turn of the game */
     private boolean firstTurnFlag;
-    private int fromRow;
-    private int toRow;
-    private int fromCol;
-    private int toCol;
-    // declare other instance variables as needed
 
+    /** Row that a given piece is currently in */
+    private int fromRow;
+
+    /** Row that a given piece is moving to */
+    private int toRow;
+
+    /** Column that a given piece is currently in */
+    private int fromCol;
+
+    /** Column that a given piece is moving to */
+    private int toCol;
+
+    /** Action listener for button presses */
     private listener listener;
 
+    /******************************************************************
+     * Default constructor for the chess board panel, creates the tiles
+     * and icons for each of the pieces and adds buttons
+     *****************************************************************/
     public ChessPanel() {
         model = new ChessModel();
         board = new JButton[model.numRows()][model.numColumns()];
@@ -54,12 +83,18 @@ public class ChessPanel extends JPanel {
         add(buttonpanel);
         firstTurnFlag = true;
 
+        // creates and adds the undo button
         undoButton = new JButton("Undo");
         undoButton.addActionListener(listener);
         buttonpanel.add(undoButton);
-
     }
 
+    /******************************************************************
+     * Sets the backround colors for the background tiles
+     *
+     * @param r row
+     * @param c column
+     *****************************************************************/
     private void setBackGroundColor(int r, int c) {
         if ((c % 2 == 1 && r % 2 == 0) || (c % 2 == 0 && r % 2 == 1)) {
             board[r][c].setBackground(Color.LIGHT_GRAY);
@@ -68,6 +103,12 @@ public class ChessPanel extends JPanel {
         }
     }
 
+    /******************************************************************
+     * Places the white player's pieces on the board
+     *
+     * @param r row
+     * @param c column
+     *****************************************************************/
     private void placeWhitePieces(int r, int c) {
         if (model.pieceAt(r, c).type().equals("Pawn")) {
             board[r][c] = new JButton(null, wPawn);
@@ -95,6 +136,12 @@ public class ChessPanel extends JPanel {
         }
     }
 
+    /******************************************************************
+     * Places the white player's pieces on the board
+     *
+     * @param r row
+     * @param c column
+     *****************************************************************/
     private void placeBlackPieces(int r, int c) {
         if (model.pieceAt(r, c).type().equals("Pawn")) {
             board[r][c] = new JButton(null, bPawn);
@@ -122,6 +169,9 @@ public class ChessPanel extends JPanel {
         }
     }
 
+    /******************************************************************
+     * Locates and creates the icons for the player pieces
+     *****************************************************************/
     private void createIcons() {
         // Sets the Image for white player pieces
         wRook = new ImageIcon("./Chess Project/Source/Icons/wRook.png");
@@ -137,10 +187,11 @@ public class ChessPanel extends JPanel {
         bPawn = new ImageIcon("./Chess Project/Source/Icons/bPawn.png");
         bKnight = new ImageIcon("./Chess Project/Source/Icons/bKnight.png");
 //        bTile = new ImageIcon("./Chess Project/Source/Icons/bTile.png");
-
     }
 
-    // method that updates the board
+    /******************************************************************
+     * Method that displays and updates the board
+     *****************************************************************/
     private void displayBoard() {
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++)
@@ -188,6 +239,13 @@ public class ChessPanel extends JPanel {
         repaint();
     }
 
+    /******************************************************************
+     * Displays a unit promotion pop up when a player's pawn makes it
+     * to the top / bottom row of the board
+     *
+     * @param row row
+     * @param col column
+     *****************************************************************/
     public void promoteUnit(int row, int col) {
         if (model.pieceAt(row, col).type().equals("Pawn") && (row == 0 || row == 7)) {
             String[] promotions = {"Queen", "Knight", "Rook", "Bishop"};
@@ -197,24 +255,28 @@ public class ChessPanel extends JPanel {
             if (output == -1){
                 promoteUnit(row, col);
             }
+            // user selected Queen
             if (output == 0) {
                 if (model.pieceAt(row, col).player() == Player.WHITE)
                     model.setPiece(row, col, new Queen(Player.WHITE));
                 else
                     model.setPiece(row, col, new Queen(Player.BLACK));
 
+            // user selected Knight
             } else if (output == 1) {
                 if (model.pieceAt(row, col).player() == Player.WHITE)
                     model.setPiece(row, col, new Knight(Player.WHITE));
                 else
                     model.setPiece(row, col, new Knight(Player.BLACK));
 
+            // user selected Rook
             } else if (output == 2) {
                 if (model.pieceAt(row, col).player() == Player.WHITE)
                     model.setPiece(row, col, new Rook(Player.WHITE));
                 else
                     model.setPiece(row, col, new Rook(Player.BLACK));
 
+            // user selected Bishop
             } else if (output == 3) {
                 if (model.pieceAt(row, col).player() == Player.WHITE)
                     model.setPiece(row, col, new Bishop(Player.WHITE));
@@ -224,7 +286,10 @@ public class ChessPanel extends JPanel {
         }
     }
 
-    // inner class that represents action listener for buttons
+    /******************************************************************
+     * Inner action listener class that handles the users inputs to
+     * move pieces and handle button presses
+     *****************************************************************/
     private class listener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             for (int r = 0; r < model.numRows(); r++)

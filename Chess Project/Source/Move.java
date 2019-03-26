@@ -1,6 +1,8 @@
 package Source;
 
 public class Move {
+
+
 	public int fromRow, fromColumn, toRow, toColumn;
 
 	public Move() {

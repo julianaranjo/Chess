@@ -1,23 +1,57 @@
 package Source;
 
+/**********************************************************************
+ * Class for the Pawn piece. Determines valid moves and
+ * identifiers.
+ *
+ * @author Tyler Dys, Matt Jones, Julia Naranjo
+ * @version 3/25/2019
+ *********************************************************************/
 public class Pawn extends ChessPiece {
     private boolean firstMove;
     private boolean enPassantOK; // can the piece be taken via en passant
 
+    /******************************************************************
+     * Constructor for the Pawn class. Creates a new white or
+     * black Pawn piece.
+     *
+     * @param player Either black or white, determines piece color
+     *****************************************************************/
     public Pawn(Player player) {
         super(player);
         this.firstMove = true;
     }
 
+    /******************************************************************
+     * Constructor for the Pawn class. Creates a new white or black
+     * Pawn piece with an ability to change whether it is on its first
+     * move.
+     *
+     * @param player Either black or white, determines piece color
+     * @param firstMove is it the pawns first move
+     *****************************************************************/
     public Pawn(Player player, boolean firstMove) {
         super(player);
         this.firstMove = firstMove;
     }
 
+    /******************************************************************
+     * Sets the type / name of the Pawn object "Pawn"
+     *
+     * @return "Pawn"
+     *****************************************************************/
     public String type() {
         return "Pawn";
     }
 
+    /******************************************************************
+     * Creates a copy of a piece at a given location to see if it
+     * can be taken via en passant
+     *
+     * @param row the row
+     * @param col the column
+     * @param board the Chess board array
+     *****************************************************************/
     private boolean canCaptureEnPassant(int row, int col, IChessPiece[][] board) {
         if (board[row][col] != null) {
             IChessPiece temp = board[row][col];
@@ -29,10 +63,24 @@ public class Pawn extends ChessPiece {
         return false;
     }
 
-    // determines if the move is valid for a pawn piece
+    /******************************************************************
+     * Determines whether the pawns move is valid or not, also checks
+     * to see if it can be taken via en passant.
+     *
+     * @param move the move being validated
+     * @param board the chess board array
+     *****************************************************************/
     public boolean isValidMove(Move move, IChessPiece[][] board) {
         boolean valid = true;
 
+        if ((move.fromRow == move.toRow) && (move.fromColumn == move.toColumn))
+            return false;
+
+        if (board[move.toRow][move.toColumn] != null)
+            if (board[move.toRow][move.toColumn].player().equals(player()))
+                return false;
+
+        // Prevents the piece from gowing backward
         if (player().equals(Player.WHITE)) {
             if (move.toRow > move.fromRow)
                 valid = false;
@@ -40,6 +88,7 @@ public class Pawn extends ChessPiece {
             if (move.toRow < move.fromRow)
                 valid = false;
         }
+
 
         if (move.toColumn == move.fromColumn) {
             // Not taking a piece
@@ -91,6 +140,7 @@ public class Pawn extends ChessPiece {
                 valid = false;
             }
         }
+        // Checking to see if the player can perform an en passant
         if (player() == Player.WHITE && move.fromRow == 3){
             if (canCaptureEnPassant(move.toRow + 1, move.toColumn, board)) {
                 valid = true;
