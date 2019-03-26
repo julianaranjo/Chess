@@ -36,8 +36,7 @@ public class Bishop extends ChessPiece {
      * @param board the game board array
      * @return true or false depending on validity of move
      *****************************************************************/
-    public boolean isValidMove(Move move, IChessPiece[][] board)
-	{
+    public boolean isValidMove(Move move, IChessPiece[][] board) {
 		int ra = move.fromRow, rb = move.toRow;
 		int ca = move.fromColumn, cb = move.toColumn;
 
@@ -47,8 +46,8 @@ public class Bishop extends ChessPiece {
 			return false;
 		}
 
-		// has to move to same row or column
-		if (rb!=ra && cb!=ca)
+		// has to move to same diagonal
+		if (rb-cb!=ra-ca && rb+cb!=ra+ca)
 		{
 			return false;
 		}
@@ -59,13 +58,9 @@ public class Bishop extends ChessPiece {
 			return false;
 		}
 
-		// for example if rook is moving up-right, then dr=-1 and dc=1 (there are four possibilies)
-		int dr = 0;
-		if (rb-ra!=0)
-			dr = (rb-ra)/Math.abs(rb-ra);
-		int dc = 0;
-		if (cb-ca!=0)
-			dc = (cb-ca)/Math.abs(cb-ca);
+		// for example if bishop is moving up-right, then dr=-1 and dc=1 (there are four possibilies)
+		int dr = (rb-ra)/Math.abs(rb-ra);
+		int dc = (cb-ca)/Math.abs(cb-ca);
 
 		int r = ra+dr;
 		int c = ca+dc;
@@ -79,5 +74,8 @@ public class Bishop extends ChessPiece {
 			r += dr;
 			c += dc;
 		}
+
+		return true;
+	}
 
 }
