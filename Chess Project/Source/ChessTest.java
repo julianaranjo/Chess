@@ -305,7 +305,7 @@ public class ChessTest
 
         Player q = Player.BLACK;
 
-        Queen queen = new Queen(q, true);
+        Queen queen = new Queen(q);
 
         Move move = new Move(5, 5, 2, 5);
 
@@ -317,11 +317,11 @@ public class ChessTest
 
     @Test
 
-    public void queenTest1(){
+    public void queenTest2(){
 
         Player q = Player.BLACK;
 
-        Queen queen = new Queen(q, true);
+        Queen queen = new Queen(q);
 
         Move move = new Move(5, 5, 7, 5);
 
@@ -333,11 +333,11 @@ public class ChessTest
 
     @Test
 
-    public void queenTest1(){
+    public void queenTest3(){
 
         Player q = Player.BLACK;
 
-        Queen queen = new Queen(q, true);
+        Queen queen = new Queen(q);
 
         Move move = new Move(5, 5, 5, 7);
 
@@ -349,11 +349,11 @@ public class ChessTest
 
     @Test
 
-    public void queenTest1(){
+    public void queenTest4(){
 
         Player q = Player.BLACK;
 
-        Queen queen = new Queen(q, true);
+        Queen queen = new Queen(q);
 
         Move move = new Move(5, 5, 5, 3);
 
@@ -365,11 +365,11 @@ public class ChessTest
 
     @Test
 
-    public void queenTest1(){
+    public void queenTest5(){
 
         Player q = Player.BLACK;
 
-        Queen queen = new Queen(q, true);
+        Queen queen = new Queen(q);
 
         Move move = new Move(5, 5, 3, 3);
 
@@ -381,11 +381,11 @@ public class ChessTest
 
     @Test
 
-    public void queenTest1(){
+    public void queenTest6(){
 
         Player q = Player.BLACK;
 
-        Queen queen = new Queen(q, true);
+        Queen queen = new Queen(q);
 
         Move move = new Move(5, 5, 3, 7);
 
@@ -397,11 +397,11 @@ public class ChessTest
 
     @Test
 
-    public void queenTest1(){
+    public void queenTest7(){
 
         Player q = Player.BLACK;
 
-        Queen queen = new Queen(q, true);
+        Queen queen = new Queen(q);
 
         Move move = new Move(5, 5, 7, 3);
 
@@ -413,11 +413,11 @@ public class ChessTest
 
     @Test
 
-    public void queenTest1(){
+    public void queenTest8(){
 
         Player q = Player.BLACK;
 
-        Queen queen = new Queen(q, true);
+        Queen queen = new Queen(q);
 
         Move move = new Move(5, 5, 7, 7);
 
@@ -429,11 +429,11 @@ public class ChessTest
 
     @Test
 
-    public void queenTest1(){
+    public void queenTest9(){
 
         Player q = Player.BLACK;
 
-        Queen queen = new Queen(q, true);
+        Queen queen = new Queen(q);
 
         Move move = new Move(5, 5, 7, 6);
 
