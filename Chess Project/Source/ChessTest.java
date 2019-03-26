@@ -296,4 +296,148 @@ public class ChessTest
         model.move(moveW2);
         assertFalse(model.isValidMove(moveCapture));
     }
+    
+    // Queen attempts to move backwards
+
+    @Test
+
+    public void queenTest1(){
+
+        Player q = Player.BLACK;
+
+        Queen queen = new Queen(q, true);
+
+        Move move = new Move(5, 5, 2, 5);
+
+        assertTrue(queen.isValidMove(move, board));
+
+    }
+    
+    // Queen attempts to move forwards
+
+    @Test
+
+    public void queenTest1(){
+
+        Player q = Player.BLACK;
+
+        Queen queen = new Queen(q, true);
+
+        Move move = new Move(5, 5, 7, 5);
+
+        assertTrue(queen.isValidMove(move, board));
+
+    }
+    
+    // Queen attempts to move to the right
+
+    @Test
+
+    public void queenTest1(){
+
+        Player q = Player.BLACK;
+
+        Queen queen = new Queen(q, true);
+
+        Move move = new Move(5, 5, 5, 7);
+
+        assertTrue(queen.isValidMove(move, board));
+
+    }
+    
+    // Queen attempts to move left
+
+    @Test
+
+    public void queenTest1(){
+
+        Player q = Player.BLACK;
+
+        Queen queen = new Queen(q, true);
+
+        Move move = new Move(5, 5, 5, 3);
+
+        assertTrue(queen.isValidMove(move, board));
+
+    }
+    
+    // Queen attempts to move up and left
+
+    @Test
+
+    public void queenTest1(){
+
+        Player q = Player.BLACK;
+
+        Queen queen = new Queen(q, true);
+
+        Move move = new Move(5, 5, 3, 3);
+
+        assertTrue(queen.isValidMove(move, board));
+
+    }
+    
+    // Queen attempts to move up and right
+
+    @Test
+
+    public void queenTest1(){
+
+        Player q = Player.BLACK;
+
+        Queen queen = new Queen(q, true);
+
+        Move move = new Move(5, 5, 3, 7);
+
+        assertTrue(queen.isValidMove(move, board));
+
+    }
+    
+    // Queen attempts to move down and left
+
+    @Test
+
+    public void queenTest1(){
+
+        Player q = Player.BLACK;
+
+        Queen queen = new Queen(q, true);
+
+        Move move = new Move(5, 5, 7, 3);
+
+        assertTrue(queen.isValidMove(move, board));
+
+    }
+    
+    // Queen attempts to move down and right
+
+    @Test
+
+    public void queenTest1(){
+
+        Player q = Player.BLACK;
+
+        Queen queen = new Queen(q, true);
+
+        Move move = new Move(5, 5, 7, 7);
+
+        assertTrue(queen.isValidMove(move, board));
+
+    }
+    
+    // Queen attempts to move in an L shape
+
+    @Test
+
+    public void queenTest1(){
+
+        Player q = Player.BLACK;
+
+        Queen queen = new Queen(q, true);
+
+        Move move = new Move(5, 5, 7, 6);
+
+        assertTrue(queen.isValidMove(move, board));
+
+    }
 }
