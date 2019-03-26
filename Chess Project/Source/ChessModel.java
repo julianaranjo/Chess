@@ -241,7 +241,7 @@ public class ChessModel implements IChessModel {
      * Method for the AI to use to remove its pieces from places
      * where they can be captured.
      *
-     * @return //FIXME
+     * @return
      *****************************************************************/
     public boolean attemptToRemoveFromDanger() {
         Move attemptMove;
@@ -264,7 +264,7 @@ public class ChessModel implements IChessModel {
     /******************************************************************
      * Method for the AI to find a place to move its piece to.
      *
-     * @return //FIXME
+     * @return
      *****************************************************************/
     public boolean FindAPlaceToMoveThisPiece(int row, int column) {
 

@@ -11,7 +11,10 @@ import static org.junit.Assert.*;
  *********************************************************************/
 public class ChessTest
 {
+    /** the chessboard */
     private IChessPiece[][] board = new IChessPiece[8][8];
+
+    private ChessModel model = new ChessModel();
 
     // rook stays in same spot
     @Test
@@ -251,5 +254,46 @@ public class ChessTest
         Pawn pawn = new Pawn(p);
         Move move = new Move(5, 5, 5, 5);
         assertFalse(pawn.isValidMove(move, board));
+    }
+
+    // pawn moves one space forward
+    @Test
+    public void pawnTest2(){
+        Player p = Player.BLACK;
+        Pawn pawn = new Pawn(p);
+        Move move = new Move(4, 5, 5, 5);
+        assertTrue(pawn.isValidMove(move, board));
+    }
+
+    // pawn moves two spaces forward on first turn
+    @Test
+    public void pawnTest3(){
+        Player p = Player.BLACK;
+        Pawn pawn = new Pawn(p, true);
+        Move move = new Move(3, 5, 5, 5);
+        assertTrue(pawn.isValidMove(move, board));
+    }
+
+    // pawn moves two spaces forward on second turn
+    @Test
+    public void pawnTest4(){
+        Player p = Player.BLACK;
+        Pawn pawn = new Pawn(p, false);
+        Move move = new Move(3, 5, 5, 5);
+        assertFalse(pawn.isValidMove(move, board));
+    }
+
+    // en passant test for white pawns
+    @Test
+    public void pawnTest5(){
+        model = new ChessModel();
+        Move moveB = new Move (1, 0, 3, 0 );
+        Move moveW1 = new Move (6, 1, 4, 1);
+        Move moveW2 = new Move (4, 1, 3, 1);
+        Move moveCapture = new Move (3, 1, 2, 0);
+        model.move(moveB);
+        model.move(moveW1);
+        model.move(moveW2);
+        assertFalse(model.isValidMove(moveCapture));
     }
 }
