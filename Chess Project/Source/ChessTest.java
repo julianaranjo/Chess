@@ -437,7 +437,7 @@ public class ChessTest
 
         Move move = new Move(5, 5, 7, 6);
 
-        assertTrue(queen.isValidMove(move, board));
+        assertFalse(queen.isValidMove(move, board));
 
     }
 }
